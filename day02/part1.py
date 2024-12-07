@@ -22,7 +22,7 @@ def solve(input_string: str) -> int:
 
             # Reports are safe if they are monotonically decreasing or increasing.
             adj_mode = "d" if cur > nex else "i"
-            mode = mode if mode != None else adj_mode
+            mode = mode if mode is not None else adj_mode
             if mode != adj_mode:
                 break
 

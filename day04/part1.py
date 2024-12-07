@@ -2,7 +2,6 @@ from __future__ import annotations
 import os
 import argparse
 import pytest
-import re
 
 # CONSTANTS ----------------------------------------------------------------------------
 DIR = os.path.dirname(os.path.abspath(__file__))
