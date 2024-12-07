@@ -31,7 +31,7 @@ def solve(input_string: str) -> int:
     if not initial_pos:
         raise RuntimeError("Guard cannot be found!")
 
-    visited = {initial_pos}
+    visited = set()
     direction_index: int = 0
     cur_pos = initial_pos
 
@@ -40,7 +40,7 @@ def solve(input_string: str) -> int:
         visited.add(cur_pos)
 
         # Turn?
-        if _turn(cur_pos, ORDER[direction_index], area):
+        while _turn(cur_pos, ORDER[direction_index], area):
             direction_index = (direction_index + 1) % len(ORDER)
 
         # Update position
