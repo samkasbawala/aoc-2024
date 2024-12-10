@@ -16,41 +16,56 @@ def solve(input_string: str) -> int:
         disk_map += line.strip()
 
     blocks = _get_block(disk_map)
-    reordered = _reorder(list(blocks))
+    reordered = _reorder(blocks)
     end = reordered.index(".")
 
     return sum([int(id) * i for i, id in enumerate(reordered[:end])])
 
 
-def _get_block(disk_map: str) -> str:
-    odd = len(disk_map) % 2 == 1
+def _get_block(disk_map: str) -> list[str]:
+    """Converts disk_map to individual blocks
 
-    if odd:
-        disk_map, last = disk_map[0:-1], disk_map[-1]
+    Args:
+        disk_map (str): disk block of data
 
-    blocks = ""
+    Returns:
+        list[str]: returns a list where each item is a block
+    """
 
-    id = 0
-    for i in range(0, len(disk_map), 2):
-        file_length, free_space = disk_map[i], disk_map[i + 1]
+    l: list[str] = []
+    for i, val in enumerate(disk_map):
+        if i % 2 == 0:
+            l.extend([str(i // 2)] * int(val))
+        else:
+            l.extend(["."] * int(val))
 
-        blocks += (str(id) * int(file_length)) + ("." * int(free_space))
-        id += 1
-
-    return blocks if not odd else blocks + (str(id) * int(last))
+    return l
 
 
-def _reorder(block: list[str]) -> str:
+def _reorder(block: list[str]) -> list[str]:
+    """Reorders the block as to have contiguous blocks of memory filled
+
+    Args:
+        block (list[str]): _description_
+
+    Returns:
+        list[str]: Ordered blocks
+    """
+
     left = 0
     right = len(block) - 1
 
+    # Find first empty
     while block[left] != ".":
         left += 1
 
+    # Find right most number
     while block[right] == ".":
         right -= 1
 
     while left < right:
+
+        # swap
         block[left], block[right] = block[right], block[left]
 
         left += 1
@@ -61,7 +76,7 @@ def _reorder(block: list[str]) -> str:
         while block[right] == ".":
             right -= 1
 
-    return "".join(block)
+    return block
 
 
 # TEST CASES ---------------------------------------------------------------------------
